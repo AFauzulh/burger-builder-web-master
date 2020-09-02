@@ -11,16 +11,29 @@ import * as serviceWorker from './serviceWorker';
 
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
+import authReducer from './store/reducers/auth';
+
+const dummyMiddleware = (store) => {
+    return (next) => {
+        return (action) => {
+            console.log('[Dummy Middleware] Dispatching ', action);
+            const result = next(action);
+            console.log('[Dummy Middleware] next state ', store.getState());
+            return result;
+        };
+    };
+};
 
 const rootReducer = combineReducers({
-  burgerBuilder: burgerBuilderReducer,
-  order: orderReducer
+    burgerBuilder: burgerBuilderReducer,
+    order: orderReducer,
+    auth: authReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, composeEnhancers(
-  applyMiddleware(thunk)
+    applyMiddleware(thunk, dummyMiddleware)
 ));
 
 const app = (
