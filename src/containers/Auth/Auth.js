@@ -150,6 +150,7 @@ class Auth extends Component {
     }
 }
 
+// Reducers
 const mapStateToProps = (state) => {
     return {
         loading: state.auth.loading,
@@ -157,6 +158,7 @@ const mapStateToProps = (state) => {
     };
 };
 
+// Actions
 const mapDispatchToProps = (dispatch) => {
     return {
         onAuth: (email, password, isSignup) => dispatch(actions.auth(email, password, isSignup))
